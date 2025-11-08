@@ -1,0 +1,9 @@
+{
+  "name": "rte2025-proxy",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "proxy": "node proxy.cjs"
+  }
+}
+
