@@ -39,7 +39,7 @@ app.post("/run-python", async (req, res) => {
     // transcripcion string
     // lista 
     // direccion del pdf
-    const process = spawn("python", ["run_script.py", bodyStr.transcription, bodyStr.template, bodyStr.pdf]);
+    const process = spawn("python", ["../src/main.py", bodyStr.transcription, bodyStr.template, bodyStr.pdf]);
 
     let output = "";
     let errorOutput = "";
