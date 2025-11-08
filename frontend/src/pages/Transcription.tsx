@@ -4,8 +4,12 @@ import { useRef, useState, useEffect } from 'react'
 
 import templatesData from "@/db/db.json"
 
-// Fixed config: proxy is required and assumed to run on the same host
-const API_BASE = `${location.protocol}//${location.hostname}:8001`
+// Proxy base: defaults to :8001, but you can override via URL query params
+// Example: /transcription?proxyHost=localhost&proxyPort=8010
+const qp = new URLSearchParams(location.search)
+const proxyHost = qp.get('proxyHost') || location.hostname
+const proxyPort = qp.get('proxyPort') || '8001'
+const API_BASE = `${location.protocol}//${proxyHost}:${proxyPort}`
 const ENDPOINT_PATH = '/v1/audio/transcriptions'
 const MODEL_ID = 'Systran/faster-distil-whisper-small.en'
 
