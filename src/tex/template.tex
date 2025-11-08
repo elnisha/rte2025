@@ -1,0 +1,34 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\title{Incident Report}
+\author{\VAR{reporting_officer}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section*{Incident Summary}
+\begin{itemize}
+    \item \textbf{Location:} \VAR{incident_location}
+    \item \textbf{Assisting Officer:} \VAR{assisting_officer}
+    \item \textbf{Number of Victims:} \VAR{amount_of_victims}
+\end{itemize}
+
+\section*{Involved Parties}
+
+% This is a Jinja2 loop! It will loop over your list of victims.
+\BLOCK{if victim_name_s}
+    \begin{itemize}
+    \BLOCK{for victim in victim_name_s}
+        \item \VAR{victim}
+    \BLOCK{endfor}
+    \end{itemize}
+\BLOCK{else}
+    No victims listed.
+\BLOCK{endif}
+
+\end{document}

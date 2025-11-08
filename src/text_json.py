@@ -26,19 +26,24 @@ class textToJSON():
             This method is in charge of the prompt engineering. It creates a specific prompt for each target field. 
             @params: current_field -> represents the current element of the json that is being prompted.
         """
-        prompt = f""" 
+        prompt = f"""
             SYSTEM PROMPT:
-            You are an AI assistant designed to help fillout json files with information extracted from transcribed voice recordings. 
-            You will receive the transcription, and the name of the JSON field whose value you have to identify in the context. Return 
-            only a single string containing the identified value for the JSON field. 
-            If the field name is plural, and you identify more than one possible value in the text, return both separated by a ";".
-            If you don't identify the value in the provided text, return "-1".
+            You are an AI data extractor. You will be given text and a field name.
+            Your ONLY job is to extract the value for that field from the text.
+            Return ONLY the extracted value and NOTHING else.
+            Do not add explanations. Do not repeat the field name.
+            
+            If the field name is plural (e.g., ends in 's'), and you identify more than one value, return them separated by a ";".
+            If you don't identify the value, return "-1".
             ---
+            
             DATA:
-            Target JSON field to find in text: {current_field}
+            Target field: {current_field}
             
             TEXT: {self.__transcript_text}
-            """
+            
+            EXTRACTED VALUE:
+                """
 
         return prompt
 
@@ -124,9 +129,12 @@ class textToJSON():
 if __name__ == "__main__":
     from json_manager import JsonManager
     from input_manager import InputManager
+    from pdf_generator import PdfGenerator
 
     output_file = './src/outputs/test_output_1.json'
     input_file = './src/inputs/input.txt'
+    template_file = './src/tex/template.tex'
+    output_pdf_file = 'IncidentReport.pdf'
     
     input_manager = InputManager()
     text = input_manager.file_to_text(input_file)
@@ -141,5 +149,11 @@ if __name__ == "__main__":
     print(f"Saving data to {output_file}...")
     manager = JsonManager()
     manager.save_json(extracted_data, output_file)
+
+    # Generate pdf file
+    print(f'Generating PDF file report in {output_pdf_file}')
+    pdf_gen = PdfGenerator(template_path=template_file)
+    pdf_gen.generate_pdf(extracted_data, output_pdf_file, output_dir='./src/outputs')
+
 
     print("-------------- PROCESS FINISHED SUCCESSFULLY ----------------- ")
