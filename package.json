@@ -1,0 +1,29 @@
+{
+  "name": "rte2025-web",
+  "private": true,
+  "scripts": {
+    "dev": "rollup -c -w",
+    "build": "ROLLUP_WATCH=false rollup -c",
+    "start": "npm run dev",
+    "proxy": "node proxy.cjs"
+  },
+  "dependencies": {
+    "svelte": "^4.2.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "autoprefixer": "^10.4.20",
+    "livereload": "^0.9.3",
+    "postcss": "^8.4.47",
+    "rollup": "^3.29.5",
+    "rollup-plugin-livereload": "^2.0.5",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-serve": "^2.0.2",
+    "rollup-plugin-svelte": "^7.1.4",
+    "tailwindcss": "^3.4.14",
+    "typescript": "^5.4.5",
+    "tslib": "^2.6.3"
+  }
+}
