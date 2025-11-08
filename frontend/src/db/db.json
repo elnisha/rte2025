@@ -1,0 +1,31 @@
+[
+    {
+        "id": 1,
+        "name": "Customer Feedback",
+        "description": "Template for collecting customer feedback",
+        "fields": [
+            { "id": 1, "label": "Customer Name", "type": "text" },
+            { "id": 2, "label": "Feedback", "type": "textarea" }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Event Registration",
+        "description": "Template for event sign-ups",
+        "fields": [
+            { "id": 1, "label": "Full Name", "type": "text" },
+            { "id": 2, "label": "Email Address", "type": "email" },
+            { "id": 3, "label": "Event Date", "type": "date" }
+        ]
+    },
+        {
+        "id": 3,
+        "name": "Event Registration",
+        "description": "Template for event sign-ups",
+        "fields": [
+            { "id": 1, "label": "Full Name", "type": "text" },
+            { "id": 2, "label": "Email Address", "type": "email" },
+            { "id": 3, "label": "Event Date", "type": "date" }
+        ]
+    }
+]
