@@ -97,12 +97,16 @@ class textToJSON():
 
 if __name__ == "__main__":
     from json_manager import JsonManager
+    from input_manager import InputManager
 
-    text = "Officer Voldemort here, at an incident reported at 456 Oak Street. Two victims, Mark Smith and Jane Doe. Medical aid rendered for minor lacerations. Handed off to Sheriff's Deputy Alvarez. End of transmission."
+    output_file = './src/outputs/test_output_1.json'
+    input_file = './src/inputs/input.txt'
+    
+    input_manager = InputManager()
+    text = input_manager.file_to_text(input_file)
     fields = ["reporting_officer", "incident_location", "amount_of_victims", "victim_name_s", "assisting_officer"]
 
-
-    output_file = './test/test_output_1.json'
+    
     print("Extracting data from text...")
     t2j = textToJSON(text, fields)
     
