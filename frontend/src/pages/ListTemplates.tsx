@@ -14,8 +14,6 @@ export default function ListTemplates() {
     setTemplates(templatesData)
   }, [])
 
-  console.log(templates)
-
   return (
     <div className="flex flex-col items-center min-h-screen bg-white py-16 px-8">
       <h1 className="text-4xl font-bold text-slate-900 mb-12">Templates</h1>
@@ -51,7 +49,7 @@ export default function ListTemplates() {
 
       {/* Botón para crear nueva plantilla */}
       <div className="mt-16">
-        <Link to="/dashboard/form-templates/create">
+        <Link to="/dashboard/form-templates/create/">
           <Button className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-8 py-6 text-lg">
             Create New Template
           </Button>

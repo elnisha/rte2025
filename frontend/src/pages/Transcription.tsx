@@ -1,4 +1,8 @@
-import React, { useRef, useState } from 'react'
+import { Button } from '@/components/ui/button'
+import type { Template } from '@/types/template'
+import { useRef, useState, useEffect } from 'react'
+
+import templatesData from "@/db/db.json"
 
 // Fixed config: proxy is required and assumed to run on the same host
 const API_BASE = `${location.protocol}//${location.hostname}:8001`
@@ -86,6 +90,8 @@ export default function Transcription() {
   const processorRef = useRef<ScriptProcessorNode | null>(null)
   const chunksRef = useRef<Float32Array[]>([])
   const sampleRateRef = useRef<number>(44100)
+
+  const [templates, setTemplates] = useState<Template[]>([])
 
   async function startRecording() {
     setErrorMsg('')
@@ -199,6 +205,14 @@ export default function Transcription() {
     setSavedPath(''); setLatestPath(''); setSaveError(''); setSaving(false)
   }
 
+  useEffect(() => {
+    setTemplates(templatesData)
+  }, [])
+
+  function generateReport() {
+    alert('Generate Report clicked! (not implemented)')
+  }
+
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
       <div className="mb-6">
@@ -252,6 +266,31 @@ export default function Transcription() {
       </div>
 
       <p className="text-xs text-slate-400 mt-4">Proxy: {API_BASE} (required). Endpoint: {ENDPOINT_PATH}. Model: {MODEL_ID}.</p>
+
+
+      <div>
+      {templates.length === 0 ? (
+        <div className="text-sm text-slate-500 mt-4">No templates available.</div>
+      ) : (
+        <div className="mt-6">
+          <h2 className="text-lg font-medium mb-2">Templates (select one or more)</h2>
+          <label className="text-xs text-slate-500 mb-2 block">Hold Ctrl/Cmd (or Shift) to select multiple</label>
+          <select
+        multiple
+        className="w-full border rounded-lg p-3 bg-white text-sm h-40 overflow-auto"
+        aria-label="Select templates"
+          >
+        {templates.map((t, i) => (
+          <option key={i} value={(t as any).id ?? i} title={(t as any).description || ''}>
+            {(t as any).title || (t as any).name || `Template ${i + 1}`}
+          </option>
+        ))}
+          </select>
+        </div>
+      )}
+      </div>
+
+      <Button className="mt-6" onClick={generateReport}>Generate Report</Button>
     </div>
   )
 }

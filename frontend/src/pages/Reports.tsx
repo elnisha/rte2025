@@ -1,8 +1,8 @@
+import Transcription from "./Transcription"
+
 function Reports() {
-    return (
-        <div className="">
-            Reports
-        </div>
+    return (    
+        <Transcription />
     )
 }
 
