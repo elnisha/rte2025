@@ -137,7 +137,13 @@ class Fill():
 
         # Generate dictionary of answers from your original function 
         t2j = textToJSON(user_input, definitions)
-        textbox_answers = t2j.get_data()  # expected: {field_name: value}
+        textbox_answers = t2j.get_data()  # This is a dictionary
+
+        # --- FIX 1: Convert the dictionary's values to a list ---
+        # This relies on your 'definitions' list and the LLM's
+        # output matching the PDF's field order.
+        answers_list = list(textbox_answers.values())
+        # --- END FIX ---
 
         # Read PDF 
         pdf = PdfReader(pdf_form)
@@ -145,26 +151,31 @@ class Fill():
         # Loop through pages 
         for page in pdf.pages:
             if page.Annots:
-                # Sort annotations by vertical position (top-to-bottom), then horizontal (left-to-right)
                 sorted_annots = sorted(
                     page.Annots,
-                    key=lambda a: (-float(a.Rect[1]), float(a.Rect[0]))  # y descending, x ascending
+                    key=lambda a: (-float(a.Rect[1]), float(a.Rect[0]))
                 )
 
-                # Fill fields in sorted order
                 i = 0
                 for annot in sorted_annots:
                     if annot.Subtype == '/Widget' and annot.T:
-                        # Remove parentheses around /T
                         field_name = annot.T[1:-1]
-                        annot.V = f'{textbox_answers[i]}'
-                        annot.AP = None  # force PDF viewer to display text
-                    i += 1
+                        
+                        # --- FIX 2: Use the 'answers_list' and check bounds ---
+                        if i < len(answers_list):
+                            annot.V = f'{answers_list[i]}'
+                            annot.AP = None
+                            i += 1
+                        else:
+                            # Stop if we run out of answers
+                            break 
+                        # --- END FIX ---
 
-        # Write output PDF 
         PdfWriter().write(output_pdf, pdf)
-
-
+        
+        # --- FIX 3: Return the output path ---
+        # Your main.py expects this function to return the path
+        return output_pdf
 
     """ 
 if __name__ == "__main__":
