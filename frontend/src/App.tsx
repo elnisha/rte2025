@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Form } from "react-router-dom";
 import Home from "./pages/Home";
+import Transcription from "./pages/Transcription";
 import DashboardLayout from "./components/layout/DashboardLayout";
 import Reports from "./pages/Reports";
 import DashboardInfo from "./pages/DashboardInfo";
@@ -12,6 +13,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/transcription" element={<Transcription />} />
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route path="" element={<DashboardInfo />} />
           <Route path="reports" element={<Reports />} />

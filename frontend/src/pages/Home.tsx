@@ -19,6 +19,9 @@ export default function Home() {
           <Link to="/analytics" className="hover:text-orange-500 transition">
             Analytics
           </Link>
+          <Link to="/transcription" className="hover:text-orange-500 transition">
+            Transcription
+          </Link>
           <Link to="/templates" className="hover:text-orange-500 transition">
             Form Templates
           </Link>
