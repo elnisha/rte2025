@@ -17,8 +17,13 @@
       },
       {
         "id": 3,
-        "label": "Dateaswe",
+        "label": "Dateaswea",
         "type": "date"
+      },
+      {
+        "id": 4,
+        "label": "as",
+        "type": "text"
       }
     ]
   },

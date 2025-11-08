@@ -215,7 +215,7 @@ export default function Transcription() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          // transcripcion string
+          transcription: transcript,
           template: templates,
           pdf: path
         }),
