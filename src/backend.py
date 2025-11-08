@@ -1,5 +1,8 @@
 import json
 import requests
+from json_manager import JsonManager
+from input_manager import InputManager
+from pdfrw import PdfReader, PdfWriter
 
 
 
@@ -120,14 +123,57 @@ class textToJSON():
     def get_data(self):
         return self.__json
 
+class Fill():
+    def __init__(self):
+        pass
+    
+    def fill_form(user_input: str, definitions: list, pdf_form: str):
+        """
+        Fill a PDF form with values from user_input using testToJSON.
+        Fields are filled in the visual order (top-to-bottom, left-to-right).
+        """
 
+        output_pdf = pdf_form[:-4] + "_filled.pdf"
+
+        # Generate dictionary of answers from your original function 
+        t2j = textToJSON(user_input, definitions)
+        textbox_answers = t2j.get_data()  # expected: {field_name: value}
+
+        # Read PDF 
+        pdf = PdfReader(pdf_form)
+
+        # Loop through pages 
+        for page in pdf.pages:
+            if page.Annots:
+                # Sort annotations by vertical position (top-to-bottom), then horizontal (left-to-right)
+                sorted_annots = sorted(
+                    page.Annots,
+                    key=lambda a: (-float(a.Rect[1]), float(a.Rect[0]))  # y descending, x ascending
+                )
+
+                # Fill fields in sorted order
+                i = 0
+                for annot in sorted_annots:
+                    if annot.Subtype == '/Widget' and annot.T:
+                        # Remove parentheses around /T
+                        field_name = annot.T[1:-1]
+                        annot.V = f'{textbox_answers[i]}'
+                        annot.AP = None  # force PDF viewer to display text
+                    i += 1
+
+        # Write output PDF 
+        PdfWriter().write(output_pdf, pdf)
+
+
+
+    """ 
 if __name__ == "__main__":
-    from json_manager import JsonManager
-    from input_manager import InputManager
 
+    
     output_file = './src/outputs/test_output_1.json'
     input_file = './src/inputs/input.txt'
     
+
     input_manager = InputManager()
     text = input_manager.file_to_text(input_file)
     fields = ["reporting_officer", "incident_location", "amount_of_victims", "victim_name_s", "assisting_officer"]
@@ -143,3 +189,5 @@ if __name__ == "__main__":
     manager.save_json(extracted_data, output_file)
 
     print("-------------- PROCESS FINISHED SUCCESSFULLY ----------------- ")
+    """ 
+    
