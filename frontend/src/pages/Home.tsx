@@ -24,10 +24,12 @@ export default function Home() {
           </Link>
         </nav>
 
-        <Button className="bg-gradient-to-r from-red-500 to-orange-500 text-white hover:opacity-90">
-          <Mail className="mr-2 h-4 w-4"/>
-          Login with Email
-        </Button>
+        <Link to="/dashboard">
+          <Button className="bg-gradient-to-r from-red-500 to-orange-500 text-white hover:opacity-90">
+            <Mail className="mr-2 h-4 w-4" />
+            Login with Email
+          </Button>
+        </Link>
       </header>
 
       <main className="flex flex-col items-center justify-center text-center flex-1 px-4">
@@ -42,10 +44,12 @@ export default function Home() {
           The result?
         </p>
 
-        <Button className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-5 text-lg hover:opacity-90">
-          <Mail className="mr-2 h-4 w-4"/>
-          Login with Email
-        </Button>
+        <Link to="/dashboard">
+          <Button className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-5 text-lg hover:opacity-90">
+            <Mail className="mr-2 h-4 w-4"/>
+            Login with Email
+          </Button>
+        </Link>
       </main>
     </div>
   )

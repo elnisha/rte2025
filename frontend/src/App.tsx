@@ -5,7 +5,6 @@ import Reports from "./pages/Reports";
 import FormTemplates from "./pages/FormTemplates";
 import DashboardInfo from "./pages/DashboardInfo";
 import Analytics from "./pages/Analytics";
-import TemplatesPage from "./pages/Templates";
 
 function App() {
   return (
@@ -15,7 +14,7 @@ function App() {
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route path="" element={<DashboardInfo />} />
           <Route path="reports" element={<Reports />} />
-          <Route path="form-templates" element={<TemplatesPage />} />
+          <Route path="form-templates" element={<FormTemplates />} />
           <Route path="analytics" element={<Analytics />} />
         </Route>
       </Routes>
