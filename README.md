@@ -1,51 +1,39 @@
-# Reboot the Earth - Hackathon project
-Name: X
+# 🔥 FireForm
 
-__Collaborators:__ Juan Alvarez, Manuel Carrido, Jan Sans, Marc Verges, Vincent Harkins.
+FireForm is the 1st Place Winner of the Reboot the Earth hackathon, hosted by the United Nations (UN) and UC Santa Cruz (UCSC).
 
-Subteam: 
-- Backend: Juan, Vincent, Manuel.
-- Frontend: Jan, Marc.
+It is an open-source, agnostic system built to solve administrative overhead for first responders. FireForm is a Digital Public Good (DPG) designed to help departments like Cal Fire save hundreds of hours by eliminating redundant paperwork.
 
-## Notes:
-Ideas for Inputs:
-- Radio transcript in text of the incident (we assume it's already transcribed).
-- Radio input directly from the user (firefighter).
-    - initially this input will be in text.
-- Initial input will be in __text__ -> to be scaled to voice later. 
+## 🚩 The Problem
 
+First responders, like firefighters, are often required to report a single incident to multiple different agencies (e.g., county sheriff, local PD, emergency medical services). Each agency has its own unique forms and templates. This forces firefighters to spend hours at the end of their shift filling out the same information over and over, taking them away from critical duties.
 
-To build the docker image we used for this project run this:
-```docker run \
-  --rm \
-  --detach \
-  --publish 8000:8000 \
-  --name speaches \
-  --volume hf-hub-cache:/home/ubuntu/.cache/huggingface/hub \
-  ghcr.io/speaches-ai/speaches:latest-cpu```
+## 💡 The Solution
 
-Once running, the API will be available at http://localhost:8000.
+FireForm is a centralized "report once, file everywhere" system.
+- **Single Input:** A firefighter records a single voice memo or fills out one "master" text field describing the entire incident.
+- **AI Extraction:** The transcription is sent to an open-source LLM (via Ollama) which extracts all the key information (names, locations, incident details) into a structured JSON file.
+- **Template Filling:** FireForm then takes this single JSON object and uses it to automatically fill every required PDF template for all the different agencies.
 
-For more details on configuration and advanced usage, see the official Speaches-AI installation guide:
-https://speaches.ai/installation/￼
+The result is hours of time saved per shift, per firefighter.
 
-## Transcription Frontend + Proxy
+### ✨ Key Features
+- **Agnostic:** Works with any department's existing fillable PDF forms.
+- **AI-Powered:** Uses open-source, locally-run LLMs (Mistral) to extract data from natural language. No data ever needs to leave the local machine.
+- **Single Point of Entry:** Eliminates redundant data entry entirely.
 
-This repo includes a React-based transcription page and a small Node proxy that handles CORS and saving transcripts.
+Open-Source (DPG): Built 100% with open-source tools to be a true Digital Public Good, freely available for any department to adopt and modify.
 
-Run the proxy (root directory):
-- `npm run proxy`
-- Env overrides if needed:
-  - `TARGET=http://localhost:8000 PROXY_PORT=8001 ALLOW_ORIGIN=http://localhost:5173 npm run proxy`
+## ⚖️ License
 
-Run the frontend (Vite, inside `frontend/`):
-- `cd frontend && npm install`
-- `npm run dev`
-- Open: `http://localhost:5173/transcription`
-- If your proxy is not on 8001, pass query params to override:
-  - `http://localhost:5173/transcription?proxyPort=8010` (and optionally `&proxyHost=<host>`)
+This project is licensed under the MIT License. See the LICENSE file for details.
 
-Persistence
-- After each successful transcription, the proxy writes two files under `data/transcripts/`:
-  - `transcript-YYYY-MM-DDTHH-mm-SS-sssZ.txt` (timestamped)
-  - `transcript.txt` (always the latest)
+## 🏆 Acknowledgements and Contributors
+This project was built in 48 hours for the Reboot the Earth 2025 hackathon. Thank you to the United Nations and UC Santa Cruz for hosting this incredible event and inspiring us to build solutions for a better future.
+
+__Contributors:__ 
+- Juan Álvarez Sánchez (@juanalvv)
+- Manuel Carriedo Garrido
+- Vincent Harkins (@vharkins1)
+- Marc Vergés (@marcvergees) 
+- Jan Sans
